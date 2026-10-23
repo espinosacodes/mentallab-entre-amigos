@@ -10,6 +10,10 @@
 - 🤝 **Con el expresidente de Colombia Iván Duque** ([@ivanduquemarquez](https://www.instagram.com/ivanduquemarquez)): [ver en YouTube desde 8:55:45](https://youtu.be/wRBOx4fp9YE?t=32145)
 - 📸 Instagram: [@espinosacodes_](https://www.instagram.com/espinosacodes_) · [@fimasd_org](https://www.instagram.com/fimasd_org) (Fundación I+D)
 
+[![Entrega del premio de idea ganadora con el expresidente Iván Duque](docs/premio-duque.gif)](https://youtu.be/wRBOx4fp9YE?t=32148)
+
+*Entrega del premio "Idea ganadora · Mental Lab" con el expresidente Iván Duque. Clic para ver el video.*
+
 <img src="prototipo/qr-mentallab.png" alt="QR a espinosacodes.com/mentallab" width="160">
 
 ## El reto
