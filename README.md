@@ -7,6 +7,7 @@
 - 🌐 **Página:** [espinosacodes.com/mentallab](https://espinosacodes.com/mentallab)
 - 🎞️ **Presentación (deck de 12 diapositivas):** [espinosacodes.com/mentallab/presentacion](https://espinosacodes.com/mentallab/presentacion)
 - 🎥 **Transmisión en vivo del Foro humanaMENTE+ (Fundación I+D):** [ver en YouTube desde 8:53:40](https://youtu.be/wRBOx4fp9YE?t=32020)
+- 🤝 **Con el expresidente de Colombia Iván Duque** ([@ivanduquemarquez](https://www.instagram.com/ivanduquemarquez)): [ver en YouTube desde 8:55:45](https://youtu.be/wRBOx4fp9YE?t=32145)
 - 📸 Instagram: [@espinosacodes_](https://www.instagram.com/espinosacodes_) · [@fimasd_org](https://www.instagram.com/fimasd_org) (Fundación I+D)
 
 <img src="prototipo/qr-mentallab.png" alt="QR a espinosacodes.com/mentallab" width="160">
