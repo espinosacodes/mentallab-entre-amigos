@@ -1,5 +1,7 @@
 # Entre amigos nos cuidamos
 
+[![Landing de Entre amigos nos cuidamos](docs/landing.png)](https://espinosacodes.com/mentallab)
+
 **Idea ganadora del Mental Lab Central** (Reto 3 GRIS, hackathon humanaMENTE+, Universidad de La Sabana y Fundación I+D, Bogotá, 22 de octubre de 2026).
 
 🌐 **Página:** [espinosacodes.com/mentallab](https://espinosacodes.com/mentallab)
