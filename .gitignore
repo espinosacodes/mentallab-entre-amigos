@@ -1,2 +1,4 @@
 .DS_Store
 .playwright-mcp/
+# Official Fundación I+D material: kept local, not published
+/*.pdf

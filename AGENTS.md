@@ -36,8 +36,6 @@ Preparación para el **Reto 3 GRIS del Mental Lab Central** (hackathon humanaMEN
 | `investigacion/04-psicologos-y-brigadas-choco.md` | Psicólogos en Colombia, brigadas psicológicas y lo que pasó en el Chocó |
 | `investigacion/05-autofinanciamiento.md` | Fuentes de financiación, costo del piloto y mezclas para sostener la red |
 | `investigacion/06-duelo-por-mascotas.md` | Duelo por mascotas y ganado en desastres, y cómo incluirlo en la red |
-| `MENTAL LAB - Laboratorio_Innovacion.pdf` | Presentación oficial del taller (112 páginas) |
-| `Mental Lab Central Metodologia.pdf` | Ficha técnica oficial (25 páginas): rúbrica, agenda, Anexo A |
 
 Antes de proponer algo, lee `ideation/reto3-ideacion.md` y `investigacion/README.md`.
 

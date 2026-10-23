@@ -45,7 +45,6 @@ Su rol es observar, escuchar y conectar. Nunca hacer terapia. Alrededor de la re
 | `prototipo/prototipo.html` | Código del deck publicado en /mentallab/presentacion |
 | `prototipo/prompt-prototipo.md` | El prompt que generó el deck, con la mascota Piñón |
 | [`formulario-pitch.md`](formulario-pitch.md) | Lo que se llenó en el formulario oficial de proyectos |
-| `*.pdf` | Presentación oficial del taller y ficha técnica con la rúbrica |
 | [`AGENTS.md`](AGENTS.md) | Contexto y reglas para los agentes de IA que trabajaron en la carpeta |
 
 ## Cómo lo hicimos con IA
@@ -58,7 +57,7 @@ Las instrucciones de los facilitadores se grabaron y se pasaron por transcripci�
 
 ### 2. Darle contexto a la IA
 
-Se cargaron los dos PDF oficiales (presentación de 112 páginas y ficha técnica con la rúbrica) y se escribió [`AGENTS.md`](AGENTS.md): qué es el reto, cómo califican (comprensión sistémica 25 %, pertinencia juvenil 20 %, innovación 20 %, viabilidad 20 %, prototipo y pitch 15 %), las reglas que no se pueden romper y las convenciones de escritura. Cada conversación nueva con la IA arrancaba leyendo ese archivo.
+Se cargaron los dos PDF oficiales (presentación de 112 páginas y ficha técnica con la rúbrica; no están en este repo porque son material de la Fundación I+D) y se escribió [`AGENTS.md`](AGENTS.md): qué es el reto, cómo califican (comprensión sistémica 25 %, pertinencia juvenil 20 %, innovación 20 %, viabilidad 20 %, prototipo y pitch 15 %), las reglas que no se pueden romper y las convenciones de escritura. Cada conversación nueva con la IA arrancaba leyendo ese archivo.
 
 ### 3. Investigar
 
