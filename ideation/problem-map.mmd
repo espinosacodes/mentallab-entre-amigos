@@ -1,0 +1,54 @@
+flowchart LR
+    subgraph AUT["Problemas de la autoridad local"]
+        direction TB
+        P1["Pocos profesionales psicosociales<br/>y con contratos temporales"]
+        P2["Llega tarde y se va pronto:<br/>la atención acaba con la emergencia"]
+        P3["No sabe quiénes ni dónde están los jóvenes:<br/>el registro de damnificados es por hogar"]
+        P4["Los jóvenes no se acercan a la oferta oficial:<br/>desconfianza y estigma"]
+        P5["Salud, educación, gestión del riesgo y juventud<br/>trabajan cada una por su lado"]
+    end
+
+    P1 --> C1(("Falta alcance<br/>y permanencia"))
+    P2 --> C1
+    P3 --> C2(("Falta información<br/>y confianza"))
+    P4 --> C2
+    P5 --> C3(("Falta<br/>coordinación"))
+
+    C1 --> PC["<b>PROBLEMA CENTRAL</b><br/>La respuesta psicosocial no llega<br/>a los jóvenes y no dura, porque<br/>depende solo de pocos profesionales<br/>temporales que no saben dónde están"]
+    C2 --> PC
+    C3 --> PC
+
+    PC --> L{{"Punto de apalancamiento:<br/>los jóvenes del mismo territorio<br/>como extensión de la respuesta"}}
+
+    subgraph JOV["Jóvenes que ya están organizados"]
+        direction TB
+        S["Estudiantes de servicio social, grados 10 y 11,<br/>que quieren ser médicos o psicólogos:<br/>primera práctica de campo"]
+        U["Universitarios en práctica:<br/>psicología, trabajo social, enfermería"]
+        J["Consejos y Plataformas<br/>Municipales de Juventud"]
+    end
+
+    U -- "forman y acompañan" --> S
+    L --> S
+    L --> U
+    L --> J
+
+    S --> R["Red juvenil de cuidado<br/>post desastre"]
+    U --> R
+    J --> R
+
+    R -- "datos, alertas y remisiones" --> AUT
+    PRO["Profesional de salud mental<br/>de la alcaldía"] -- "forma y supervisa" --> R
+    R -- "solo los casos que lo necesitan" --> PRO
+
+    classDef prob fill:#fde2e1,stroke:#c0392b,color:#222
+    classDef cause fill:#fff4d6,stroke:#d4a017,color:#222
+    classDef central fill:#2c3e50,stroke:#000,color:#fff,font-size:15px
+    classDef lev fill:#e3d7f7,stroke:#6c3fb5,color:#222
+    classDef youth fill:#dff3e4,stroke:#27ae60,color:#222
+    classDef net fill:#d6eaf8,stroke:#2471a3,color:#222
+    class P1,P2,P3,P4,P5 prob
+    class C1,C2,C3 cause
+    class L lev
+    class PC central
+    class S,U,J youth
+    class R,PRO net

@@ -1,0 +1,1035 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entre amigos nos cuidamos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --coral:#FF4B4B;--coral-d:#D93A3A;
+  --sun:#FFC800;--sun-d:#E0A800;
+  --sky:#1CB0F6;--sky-d:#1899D6;
+  --violet:#CE82FF;--violet-d:#A560E0;
+  --green:#58CC02;--green-d:#46A302;
+  --ink:#2B2D42;--muted:#777;--night:#131F48;--soft:#F0F8FF;--line:#E5E5E5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#fff;color:var(--ink);font-family:"Nunito",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button{font-family:inherit}
+
+/* Top bar */
+.topbar{position:fixed;top:0;left:0;right:0;height:64px;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:2px solid #F0F0F0;transition:background .4s,border-color .4s}
+.topbar .wrap{max-width:1240px;margin:0 auto;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 5vw}
+.logo{display:flex;align-items:center;gap:.45em;font-weight:900;font-size:1.55rem;color:var(--coral);letter-spacing:-.02em}
+.logo-mark{width:34px;height:34px;display:block}
+body.dark .topbar{background:rgba(19,31,72,.92);border-color:rgba(255,255,255,.08)}
+body.dark .logo{color:#fff}
+
+/* Buttons */
+.btn{display:inline-block;font:800 .9rem "Nunito",sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:.95em 1.6em;border-radius:16px;border:none;background:var(--coral);color:#fff;box-shadow:0 5px 0 var(--coral-d);cursor:pointer;transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translateY(5px);box-shadow:0 0 0 var(--coral-d)}
+.btn.ghost{background:#fff;color:var(--sky);border:2px solid var(--line);box-shadow:0 5px 0 var(--line)}
+.btn.sm{padding:.75em 1.2em;font-size:.72rem;border-radius:13px;box-shadow:0 4px 0 var(--coral-d)}
+
+/* Deck */
+.deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:84px 5vw 70px;opacity:0;visibility:hidden;transform:translateX(60px);transition:opacity .45s,transform .6s cubic-bezier(.2,.8,.2,1),visibility 0s .6s;--pw:min(280px,calc((100vh - 190px)*.45));overflow:hidden}
+.slide.active{opacity:1;visibility:visible;transform:none;transition:opacity .45s,transform .6s cubic-bezier(.2,.8,.2,1)}
+.slide.before{transform:translateX(-60px)}
+.slide.soft{background:var(--soft)}
+.slide.night{background:radial-gradient(circle at 20% 30%,rgba(255,255,255,.9) 0 1px,transparent 2px),radial-gradient(circle at 70% 15%,rgba(255,255,255,.8) 0 1px,transparent 2px),radial-gradient(circle at 85% 70%,rgba(255,255,255,.7) 0 1px,transparent 2px),radial-gradient(circle at 40% 80%,rgba(255,255,255,.6) 0 1px,transparent 2px),radial-gradient(circle at 10% 85%,rgba(255,255,255,.8) 0 1px,transparent 2px),radial-gradient(circle at 55% 45%,rgba(255,255,255,.5) 0 1px,transparent 2px),var(--night);color:#fff}
+.inner{position:relative;z-index:1;width:100%;max-width:1180px;display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center}
+.inner.rev .text{order:2}
+.inner.full{grid-template-columns:1fr}
+.inner.wide{grid-template-columns:1fr 1.35fr}
+.inner.asks-grid{grid-template-columns:1.7fr 1fr}
+
+/* Type */
+.text h1{font-size:clamp(2.8rem,6.4vw,5.6rem);line-height:.95;font-weight:900;color:var(--coral);margin:0 0 .15em;letter-spacing:-.025em}
+.text h2,.title{font-size:clamp(2rem,4.2vw,3.6rem);line-height:1.03;font-weight:900;margin:0 0 .35em;letter-spacing:-.02em}
+.title.center{text-align:center}
+.sub{font-size:clamp(1.4rem,2.6vw,2.3rem);font-weight:900;margin:0 0 .6em;letter-spacing:-.01em}
+.kicker{font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:clamp(.75rem,1vw,.95rem);color:var(--sky);margin:0 0 .9em}
+.lead{font-size:clamp(1.05rem,1.55vw,1.4rem);font-weight:600;color:#4b4f63;line-height:1.45;max-width:30em;margin:0 0 1em}
+.night .lead{color:#C9D1F0}
+.coral{color:var(--coral)}
+.ctas{display:flex;gap:14px;flex-wrap:wrap;margin:1.4em 0 1.6em}
+.foot{font-weight:800;color:#AFAFAF;letter-spacing:.06em;font-size:.95rem;margin:0}
+.small{font-size:.9rem;font-weight:700;color:#9A9A9A;margin-top:1em}
+.grad{background:linear-gradient(90deg,#FF6B6B,#CE82FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* Visual area, phone and mascot */
+.visual{position:relative;display:flex;justify-content:center;align-items:center;min-height:calc(var(--pw)*2.2)}
+.phone-wrap{position:relative;z-index:2}
+.slide.active .phone-wrap{animation:popin .8s cubic-bezier(.34,1.56,.64,1) both}
+.slide.active .pinon{animation:popin .8s .18s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes popin{from{opacity:0;transform:translateY(40px) scale(.9)}to{opacity:1;transform:none}}
+.pinon{position:absolute;width:calc(var(--pw)*.74);z-index:3;pointer-events:none}
+.pinon svg{display:block;width:100%;overflow:visible}
+.pinon.flip svg{transform:scaleX(-1)}
+.pinon.r{right:calc(var(--pw)*-.62);bottom:-3%}
+.pinon.l{left:calc(var(--pw)*-.62);bottom:-3%}
+.pinon.static{position:relative;right:auto;left:auto;bottom:auto;width:min(320px,80%);margin:0 auto}
+
+.p-body{animation:breathe 3.2s ease-in-out infinite;transform-box:view-box}
+@keyframes breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.p-eyes{animation:blink 4.6s infinite;transform-box:fill-box;transform-origin:center}
+@keyframes blink{0%,95%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.p-wave{transform-box:view-box;transform-origin:140px 145px;animation:wave 1.1s ease-in-out infinite}
+@keyframes wave{0%,100%{transform:rotate(0)}50%{transform:rotate(-18deg)}}
+.p-tail{transform-box:view-box;transform-origin:140px 165px;animation:wag .5s ease-in-out infinite alternate}
+@keyframes wag{from{transform:rotate(-8deg)}to{transform:rotate(10deg)}}
+.jump .p-body{animation:jump 1.2s cubic-bezier(.3,0,.3,1) infinite}
+@keyframes jump{0%,100%{transform:translateY(0)}45%{transform:translateY(-26px)}}
+
+.bubble{position:absolute;z-index:4;background:#fff;color:var(--ink);border:2px solid var(--line);border-radius:18px;padding:.75em 1em;font-weight:800;font-size:clamp(.82rem,1.1vw,1rem);line-height:1.3;box-shadow:0 4px 0 var(--line);width:max-content;max-width:16em}
+.bubble::after{content:"";position:absolute;bottom:-11px;left:var(--tail,30px);width:18px;height:18px;background:#fff;border-right:2px solid var(--line);border-bottom:2px solid var(--line);transform:rotate(45deg);border-radius:0 0 4px 0}
+.slide.active .bubble{animation:popin .6s .55s cubic-bezier(.34,1.56,.64,1) both}
+
+/* Floating objects */
+.fl{position:absolute;left:var(--x);top:var(--y);width:var(--s,48px);z-index:1;animation:float var(--t,6s) ease-in-out var(--d,0s) infinite;pointer-events:none}
+.fl svg{display:block;width:100%}
+@keyframes float{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-14px) rotate(calc(var(--r,0deg) + 10deg))}}
+
+/* iPhone mockup */
+.iphone{width:var(--pw);aspect-ratio:9/19.5;position:relative;border-radius:calc(var(--pw)*.16);background:#1C1C1E;padding:calc(var(--pw)*.034);container-type:inline-size;
+  box-shadow:inset 0 0 0 1.5px #75757B,inset 0 0 0 4px #2A2A2D,0 1px 0 1px #3A3A3E,40px 60px 80px -30px rgba(30,40,80,.38),0 30px 60px -30px rgba(30,40,80,.3)}
+.iphone::before,.iphone::after{content:"";position:absolute;width:3px;background:#3A3A3E;border-radius:2px}
+.iphone::before{left:-3px;top:20%;height:9%;box-shadow:0 calc(var(--pw)*.22) 0 #3A3A3E}
+.iphone::after{right:-3px;top:27%;height:13%}
+.iphone.tilt{transform:perspective(1400px) rotateY(-14deg) rotateZ(-3deg)}
+.iphone.tilt-l{transform:perspective(1400px) rotateY(14deg) rotateZ(3deg)}
+.night .iphone{box-shadow:inset 0 0 0 1.5px #75757B,inset 0 0 0 4px #2A2A2D,0 0 90px 10px rgba(206,130,255,.35),0 30px 60px -20px rgba(0,0,0,.5)}
+.screen{position:relative;width:100%;height:100%;border-radius:calc(var(--pw)*.128);overflow:hidden;background:#fff;color:#111;font-family:-apple-system,"SF Pro Text","Helvetica Neue",Arial,sans-serif;font-size:4.4cqw;line-height:1.25}
+.island{position:absolute;top:3cqw;left:50%;transform:translateX(-50%);width:29cqw;height:8.6cqw;background:#000;border-radius:5cqw;z-index:20}
+.status{position:absolute;top:0;left:0;right:0;height:12.5cqw;display:flex;align-items:center;justify-content:space-between;padding:1cqw 8cqw 0 9.5cqw;font-weight:600;font-size:4.5cqw;z-index:19}
+.status svg{width:17cqw;height:auto}
+.screen.dark .status{color:#fff}
+.home-ind{position:absolute;bottom:2.2cqw;left:50%;transform:translateX(-50%);width:35cqw;height:1.4cqw;border-radius:2cqw;background:#111;z-index:20}
+.screen.dark .home-ind{background:#fff}
+.ic{display:inline-block;width:1.7em;height:1.7em;flex:none}
+.ic svg{width:100%;height:100%;display:block}
+
+/* Instagram: profile */
+.app{position:absolute;inset:0;padding-top:12.5cqw;display:flex;flex-direction:column}
+.ig-top{display:flex;align-items:center;justify-content:space-between;padding:.5em 1em .5em;font-weight:700;font-size:1.12em}
+.ig-top .tools{display:flex;gap:.7em}
+.ig-top .ic{width:1.35em;height:1.35em}
+.verified{display:inline-grid;place-items:center;width:1em;height:1em;border-radius:50%;background:#0095F6;color:#fff;font-size:.65em;margin-left:.25em;vertical-align:middle}
+.prof{display:flex;align-items:center;gap:1em;padding:.4em 1em}
+.ring{border-radius:50%;padding:2.5px;background:linear-gradient(45deg,#FEDA75,#FA7E1E,#D62976,#962FBF,#4F5BD5);flex:none}
+.ring>.av{border:2.5px solid #fff}
+.av{border-radius:50%;overflow:hidden;display:grid;place-items:center;color:#fff;font-weight:800;width:2.4em;height:2.4em;flex:none}
+.av svg{width:100%;height:100%;display:block}
+.ring.big .av{width:5.2em;height:5.2em}
+.stats{flex:1;display:flex;justify-content:space-around;text-align:center;font-size:.92em}
+.stats b{display:block;font-size:1.1em}
+.stats span{font-size:.78em;color:#333}
+.bio{padding:.5em 1em;font-size:.84em;line-height:1.35}
+.btns{display:flex;gap:.4em;padding:.2em 1em}
+.btns span{flex:1;text-align:center;padding:.5em;border-radius:.6em;background:#EFEFEF;font-weight:600;font-size:.84em}
+.btns .blue{background:#0095F6;color:#fff}
+.hls{display:flex;gap:.75em;padding:.8em 1em .6em}
+.hl{text-align:center;font-size:.66em;width:4.6em}
+.hl i{width:4.4em;height:4.4em;border-radius:50%;border:1.5px solid #ddd;display:grid;place-items:center;margin:0 auto .3em;padding:.25em}
+.hl i b{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;color:#fff}
+.hl i b .ic{width:1.6em;height:1.6em}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;border-top:1px solid #eee;padding-top:2px}
+.pgrid div{aspect-ratio:1;display:grid;place-items:center;text-align:center;color:#fff;font:800 .72em/1.15 "Nunito",sans-serif;padding:.5em}
+.pgrid .ic{width:2.2em;height:2.2em}
+.tabbar{margin-top:auto;display:flex;justify-content:space-around;padding:.7em 0 2.1em;border-top:1px solid #eee;background:#fff}
+.tabbar .ic{width:1.45em;height:1.45em}
+
+/* Instagram: story */
+.story{position:absolute;inset:0;padding-top:12.5cqw;display:flex;flex-direction:column;background:linear-gradient(170deg,#3A2466,#121436 70%);color:#fff}
+.bars{display:flex;gap:3px;padding:.3em .7em}
+.bars i{flex:1;height:2px;background:rgba(255,255,255,.35);border-radius:2px;position:relative;overflow:hidden}
+.bars i.done{background:#fff}
+.bars i.run::after{content:"";position:absolute;inset:0;width:55%;background:#fff}
+.s-head{display:flex;align-items:center;gap:.5em;padding:.55em .8em;font-size:.85em}
+.s-head .av{width:2.2em;height:2.2em;border:1.5px solid #fff}
+.s-head span{opacity:.7}
+.s-head .x{margin-left:auto;display:flex;gap:.6em}
+.s-head .x .ic{width:1.3em;height:1.3em}
+.meme{margin:1.4em .9em 0;background:#fff;color:#111;border-radius:.35em;overflow:hidden}
+.meme p{margin:0;padding:.75em .85em;font:800 1.02em/1.22 Arial,Helvetica,sans-serif}
+.meme svg{display:block;width:100%}
+.s-foot{margin-top:auto;display:flex;align-items:center;gap:.8em;padding:.6em .8em 2.4em}
+.s-foot .input{flex:1;border:1px solid rgba(255,255,255,.6);border-radius:2em;padding:.6em 1em;font-size:.84em}
+.s-foot .ic{width:1.5em;height:1.5em}
+.pulse{position:relative}
+.pulse::after{content:"";position:absolute;inset:-.45em;border-radius:50%;border:2.5px solid var(--sun);animation:ping 1.3s ease-out infinite}
+@keyframes ping{from{transform:scale(.6);opacity:1}to{transform:scale(1.6);opacity:0}}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:8;background:#fff;color:#111;border-radius:1.2em 1.2em 0 0;padding:.5em 1em 2.2em;transform:translateY(105%);transition:transform .55s cubic-bezier(.3,1.25,.5,1)}
+.sheet .handle{width:2.6em;height:.28em;border-radius:1em;background:#ccc;margin:0 auto .7em}
+.sheet .search{background:#EFEFEF;border-radius:.7em;padding:.5em .8em;color:#888;font-size:.84em;display:flex;align-items:center;gap:.4em}
+.sheet .search .ic{width:1.1em;height:1.1em}
+.acc{display:grid;grid-template-columns:repeat(3,1fr);gap:.8em .3em;margin:.9em 0}
+.acc>div{text-align:center;font-size:.7em;position:relative}
+.acc .av{width:4.4em;height:4.4em;margin:0 auto .35em;font-size:1.25em}
+.acc .tick{position:absolute;top:3.6em;left:calc(50% + 1.3em);width:1.7em;height:1.7em;border-radius:50%;background:#0095F6;border:2px solid #fff;display:grid;place-items:center;color:#fff;transform:scale(0);transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.acc .tick .ic{width:1.1em;height:1.1em}
+.worry{display:block;background:var(--coral);color:#fff;text-align:center;font:900 .95em "Nunito",sans-serif;border-radius:.8em;padding:.7em;box-shadow:0 .25em 0 var(--coral-d);text-transform:uppercase;letter-spacing:.05em}
+.sendbtn{display:block;background:#0095F6;color:#fff;text-align:center;font-weight:700;border-radius:.6em;font-size:.9em;max-height:0;padding:0;overflow:hidden;margin-top:0;transition:all .35s}
+.toast{position:absolute;top:13cqw;left:.55em;right:.55em;z-index:9;background:rgba(255,255,255,.97);color:#111;border-radius:1.1em;padding:.7em .75em;display:flex;gap:.6em;align-items:flex-start;box-shadow:0 .6em 1.8em rgba(0,0,0,.35);transform:translateY(-150%);opacity:0;transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .3s;font-size:.8em;line-height:1.3}
+.toast .av{width:2.6em;height:2.6em}
+.toast b{display:block}
+.toast small{color:#888;font-size:.85em}
+[data-step="1"] .sheet,[data-step="2"] .sheet{transform:none}
+[data-step="0"] .send-ic{color:var(--sun)}
+[data-step="2"] .acc .tick{transform:scale(1)}
+[data-step="2"] .sendbtn{max-height:3em;padding:.6em;margin-top:.7em}
+[data-step="3"] .toast{transform:none;opacity:1}
+.pulse-off .pulse::after{display:none}
+
+/* Instagram: DM */
+.dm{position:absolute;inset:0;padding-top:12.5cqw;display:flex;flex-direction:column;background:#fff}
+.dm-head{display:flex;align-items:center;gap:.55em;padding:.45em .8em .6em;border-bottom:1px solid #eee}
+.dm-head .av{width:2.4em;height:2.4em}
+.dm-head b{font-size:.9em;display:block}
+.dm-head small{display:block;color:#888;font-size:.7em}
+.dm-head .tools{margin-left:auto;display:flex;gap:.8em}
+.dm-head .ic{width:1.35em;height:1.35em}
+.dm-body{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:.35em;padding:.8em .7em;overflow:hidden}
+.msg{max-width:80%;padding:.55em .85em;border-radius:1.2em;font-size:.8em;line-height:1.32;display:none}
+.msg.in{display:block;animation:msgin .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes msgin{from{opacity:0;transform:translateY(8px) scale(.94)}to{opacity:1;transform:none}}
+.msg.them{background:#EFEFEF;align-self:flex-start;border-bottom-left-radius:.35em}
+.msg.me{background:linear-gradient(135deg,#A033FF,#5B51F8 55%,#3797F0);color:#fff;align-self:flex-end;border-bottom-right-radius:.35em}
+.seen{align-self:flex-end;font-size:.62em;color:#999;display:none}
+.seen.in{display:block}
+.typing{align-self:flex-start;background:#EFEFEF;border-radius:1.2em;padding:.65em .8em;display:none;gap:.25em}
+.typing.in{display:flex}
+.typing i{width:.42em;height:.42em;border-radius:50%;background:#999;animation:dots 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dots{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-2px)}}
+.dm-foot{padding:.4em .7em 2.3em}
+.dm-foot .input{border:1px solid #ddd;border-radius:2em;padding:.55em .9em;color:#999;font-size:.8em;display:flex;align-items:center;gap:.5em}
+.dm-foot .input .cam{width:1.9em;height:1.9em;border-radius:50%;background:#0095F6;display:grid;place-items:center;color:#fff}
+.dm-foot .input .cam .ic{width:1.1em;height:1.1em}
+
+/* Slide 3 */
+.lost{display:flex;gap:16px;margin:1.2em 0 1.4em;flex-wrap:wrap}
+.lost span{width:76px;height:76px;border-radius:50%;background:var(--soft);border:2px solid var(--line);box-shadow:0 4px 0 var(--line);display:grid;place-items:center;position:relative;color:var(--ink)}
+.lost span svg{width:40px;height:40px}
+.lost span::after{content:"";position:absolute;width:5px;height:88%;background:var(--coral);border-radius:4px;transform:rotate(45deg);box-shadow:0 0 0 3px #fff}
+.quote{display:inline-block;background:var(--violet);color:#fff;font-weight:800;font-size:clamp(1.1rem,1.8vw,1.5rem);padding:16px 22px;border-radius:22px 22px 22px 6px;box-shadow:0 5px 0 var(--violet-d);max-width:22em}
+
+/* Slide 4 */
+.frics{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:1.2em 0 1.4em}
+.card{background:#fff;border:2px solid var(--line);border-radius:24px;box-shadow:0 6px 0 var(--line);padding:24px}
+.fric{display:flex;gap:22px;align-items:center}
+.fric h3{font-size:clamp(1.3rem,2.2vw,1.9rem);font-weight:900;margin:0 0 .25em;line-height:1.1}
+.fric p{margin:0;font-weight:700;color:#777}
+.num-b{display:inline-grid;place-items:center;width:1.6em;height:1.6em;border-radius:50%;color:#fff;margin-right:.3em;font-size:.85em;vertical-align:.08em}
+.cal{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;width:150px;flex:none}
+.cal div{aspect-ratio:1;border-radius:12px;background:var(--sun);box-shadow:0 4px 0 var(--sun-d);display:grid;place-items:center;font-weight:900;color:#fff;font-size:.95rem}
+.cal div.gone{background:#fff;border:2.5px dashed #CFCFCF;box-shadow:none;color:#BDBDBD}
+.cal small{grid-column:1/-1;font-weight:800;color:#AFAFAF;font-size:.72rem;text-align:center;letter-spacing:.06em;text-transform:uppercase}
+.fact{display:flex;gap:14px;align-items:center;background:#FFF8DB;border:2px solid #FFE48A;border-radius:18px;padding:14px 20px;font-weight:700;font-size:clamp(.95rem,1.3vw,1.15rem)}
+.fact b{color:var(--ink)}
+
+/* Slide 6 steps */
+.steps{list-style:none;padding:0;margin:1em 0;display:grid;gap:10px}
+.steps li{display:flex;align-items:center;gap:12px;font-weight:800;font-size:clamp(.95rem,1.35vw,1.15rem);color:#BDBDBD;transition:color .3s}
+.steps li i{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#F2F2F2;color:#BDBDBD;font-style:normal;flex:none;transition:all .3s}
+.steps li.on{color:var(--ink)}
+.steps li.on i{background:var(--green);color:#fff;box-shadow:0 3px 0 var(--green-d)}
+.hint{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:.8rem;color:#AFAFAF;text-transform:uppercase;letter-spacing:.1em;margin-top:.6em}
+.hint b{background:var(--line);color:var(--ink);border-radius:8px;padding:2px 8px}
+
+/* Slide 8 dashboard */
+.dash{padding:20px 22px;position:relative}
+.dash-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
+.dash-top b{font-size:1.2rem;font-weight:900;display:block}
+.dash-top small{font-weight:700;color:#999}
+.tag{background:#FFF8DB;color:#B58900;border:2px solid #FFE48A;border-radius:999px;padding:4px 12px;font-weight:800;font-size:.75rem;white-space:nowrap}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.kpi{border-radius:16px;padding:10px 12px;border:2px solid #EEE;background:#FAFAFA}
+.kpi b{display:block;font-size:clamp(1.5rem,2.4vw,2.1rem);font-weight:900;color:var(--c);line-height:1}
+.kpi span{font-size:.74rem;font-weight:800;color:#888;line-height:1.15;display:block;margin-top:4px}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:clamp(.74rem,.95vw,.88rem)}
+th{text-align:left;text-transform:uppercase;letter-spacing:.08em;font-size:.68rem;color:#AFAFAF;font-weight:800;padding:6px 8px}
+td{padding:9px 8px;border-top:2px solid #F2F2F2;font-weight:700;vertical-align:middle}
+tr.hot td{background:#FFF0F0}
+tr.hot td:last-child{color:var(--coral-d);font-weight:900}
+.dot{width:15px;height:15px;border-radius:50%;display:inline-block;box-shadow:0 2px 0 rgba(0,0,0,.18)}
+.peek{position:absolute;width:120px;right:-24px;top:-92px;z-index:3}
+
+/* Slide 9 gears */
+.gears{width:100%;max-height:34vh;display:block;margin:0 auto}
+.spin{transform-box:fill-box;transform-origin:center;animation:spin 14s linear infinite}
+.spin.rev{animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.glabels{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;text-align:center;font-weight:900;font-size:clamp(.82rem,1.25vw,1.1rem);line-height:1.2;margin-top:6px}
+.glabels small{display:block;font-weight:700;color:#999;font-size:.78em;margin-top:3px}
+.sema{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.pill{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;font-weight:800;background:#fff;border:2px solid var(--line);box-shadow:0 4px 0 var(--line);font-size:clamp(.8rem,1.1vw,1rem)}
+
+/* Slide 10 path */
+.path{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative;margin-top:26px}
+.path::before{content:"";position:absolute;top:clamp(45px,5vw,65px);left:17%;right:17%;border-top:7px dotted #E0E0E0;z-index:0}
+.node{text-align:center;position:relative;z-index:1}
+.circ{width:clamp(90px,10vw,130px);aspect-ratio:1;border-radius:50%;margin:0 auto 18px;display:grid;place-items:center;background:var(--c);box-shadow:0 8px 0 var(--cd);color:#fff}
+.circ svg{width:44%;height:44%}
+.slide.active .circ{animation:popin .7s cubic-bezier(.34,1.56,.64,1) both}
+.node:nth-child(2) .circ{animation-delay:.15s!important}.node:nth-child(3) .circ{animation-delay:.3s!important}
+.when{font-weight:900;font-size:clamp(1.2rem,1.9vw,1.6rem);color:var(--cd)}
+.what{font-weight:700;color:#4b4f63;max-width:17em;margin:.35em auto 0;font-size:clamp(.92rem,1.2vw,1.08rem);line-height:1.4}
+.note{margin:30px auto 0;max-width:680px;text-align:center}
+
+/* Slide 11 asks */
+.asks{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:1.2em}
+.ask{border-radius:22px;padding:22px 18px;color:#fff;background:var(--c);box-shadow:0 7px 0 var(--cd)}
+.ask .ico{width:56px;height:56px;border-radius:16px;background:rgba(255,255,255,.25);display:grid;place-items:center;margin-bottom:14px}
+.ask .ico svg{width:30px;height:30px}
+.ask h3{margin:0 0 .3em;font-size:clamp(1.25rem,1.9vw,1.6rem);font-weight:900;line-height:1.05}
+.ask p{margin:0;font-weight:700;font-size:.95rem;line-height:1.35;opacity:.95}
+
+/* Slide 12 closing */
+.wave{position:absolute;left:0;right:0;bottom:0;height:40%;z-index:0}
+.wave svg{width:100%;height:100%;display:block}
+.closing{display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:1180px;position:relative;z-index:1}
+.closing h2{font-size:clamp(1.8rem,3.6vw,3.1rem);line-height:1.05;font-weight:900;margin:0 0 .5em;letter-spacing:-.02em}
+.closing .row{display:flex;align-items:flex-end;justify-content:center;gap:3vw;width:100%}
+.closing .crane-s{width:min(240px,22vw)}
+.closing .pinon.static{width:min(230px,20vw);margin:0}
+.line106{position:absolute;bottom:62px;left:0;right:0;text-align:center;color:#fff;font-weight:800;z-index:2;font-size:clamp(.85rem,1.2vw,1.05rem)}
+.line106 b{background:rgba(255,255,255,.2);padding:3px 10px;border-radius:999px}
+.s12{--pw:min(210px,calc((100vh - 330px)*.45))}
+
+/* Nav */
+.nav{position:fixed;bottom:20px;left:0;right:0;display:flex;justify-content:center;gap:8px;z-index:50}
+.nav button{width:11px;height:11px;border-radius:6px;border:none;background:#E2E2E2;padding:0;cursor:pointer;transition:all .3s}
+.nav button.on{background:var(--coral);width:30px}
+body.dark .nav button{background:rgba(255,255,255,.25)}
+body.dark .nav button.on{background:var(--coral)}
+body.last .nav button{background:rgba(255,255,255,.4)}
+body.last .nav button.on{background:#fff}
+.num{position:fixed;bottom:15px;right:22px;font-weight:900;color:#BDBDBD;z-index:50;font-size:.9rem}
+body.last .num{color:#fff}
+
+/* Phone and small screens */
+@media (max-width:820px){
+  .slide{align-items:flex-start;overflow-y:auto;padding:84px 16px 86px;--pw:min(54vw,240px)}
+  .inner,.inner.rev,.inner.wide,.inner.asks-grid{grid-template-columns:1fr;gap:30px}
+  .inner.rev .text{order:0}
+  .text{text-align:center}
+  .lead{margin-left:auto;margin-right:auto}
+  .ctas,.lost{justify-content:center}
+  .steps{justify-items:center}
+  .pinon{width:calc(var(--pw)*.6)}
+  .pinon.r{right:calc(var(--pw)*-.42)}
+  .pinon.l{left:calc(var(--pw)*-.42)}
+  .topbar .btn{display:none}
+  .frics,.asks{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .path{grid-template-columns:1fr}
+  .path::before{display:none}
+  .glabels{font-size:.68rem}
+  .closing .row{flex-wrap:wrap}
+  .closing .crane-s{display:none}
+  .bubble{font-size:.78rem;max-width:12em}
+  .peek{width:90px;top:-70px;right:-8px}
+  .s12{--pw:min(46vw,200px)}
+  .line106{position:relative;bottom:auto;margin-top:16px;color:var(--ink)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="logo"><span class="logo-mark" data-logo></span>entre amigos nos cuidamos</div>
+    <button class="btn sm" data-noadvance>Quiero ser parte</button>
+  </div>
+</header>
+
+<main class="deck">
+
+<!-- 1. Cover -->
+<section class="slide">
+  <div class="inner">
+    <div class="text">
+      <p class="kicker">jóvenes que acompañan a jóvenes</p>
+      <h1>entre amigos nos cuidamos.</h1>
+      <p class="sub">la red de jóvenes que se queda.</p>
+      <p class="lead">Después de un desastre encontramos a quien la está pasando mal. Y nos quedamos cuando las brigadas se van.</p>
+      <div class="ctas">
+        <button class="btn" data-go="5">Ver cómo funciona</button>
+        <button class="btn ghost" data-noadvance>Quiero ser parte</button>
+      </div>
+      <p class="foot">Reto 3 · Mental Lab · Bogotá 2026</p>
+    </div>
+    <div class="visual">
+      <i class="fl" data-k="heart" style="--x:6%;--y:8%;--s:58px;--r:-14deg"></i>
+      <i class="fl" data-k="gear" style="--x:80%;--y:2%;--s:62px;--d:-2s"></i>
+      <i class="fl" data-k="paw" style="--x:2%;--y:62%;--s:48px;--d:-1s;--r:18deg"></i>
+      <i class="fl" data-k="bubble" style="--x:84%;--y:40%;--s:52px;--d:-3s"></i>
+      <i class="fl" data-k="star" style="--x:18%;--y:88%;--s:36px;--d:-4s"></i>
+      <div class="phone-wrap">
+        <div class="iphone tilt"><div class="screen" data-time="9:41">
+          <div class="app">
+            <div class="ig-top"><span><span class="ic" data-ic="back" style="width:1em;height:1em;vertical-align:-.12em"></span> entreamigosnoscuidamos<span class="verified">&#10003;</span></span><span class="tools"><span class="ic" data-ic="bell"></span><span class="ic" data-ic="more"></span></span></div>
+            <div class="prof">
+              <div class="ring big"><div class="av" data-av="pinon"></div></div>
+              <div class="stats"><div><b>24</b><span>publicaciones</span></div><div><b>1.240</b><span>seguidores</span></div><div><b>310</b><span>seguidos</span></div></div>
+            </div>
+            <div class="bio"><b>Entre amigos nos cuidamos</b><br>Jóvenes que acompañan a jóvenes después de un desastre 🧡<br>Escríbenos, aquí hay una persona real.</div>
+            <div class="btns"><span class="blue">Seguir</span><span>Mensaje</span></div>
+            <div class="hls">
+              <div class="hl"><i><b style="background:var(--sun)"><span class="ic" data-ic="gearline"></span></b></i>Cómo funciona</div>
+              <div class="hl"><i><b style="background:var(--coral)"><span class="ic" data-ic="phone"></span></b></i>Línea 106</div>
+              <div class="hl"><i><b style="background:var(--green)"><span class="ic" data-ic="pawline"></span></b></i>Mascotas</div>
+              <div class="hl"><i><b style="background:var(--violet)"><span class="ic" data-ic="plus"></span></b></i>Únete</div>
+            </div>
+            <div class="pgrid">
+              <div style="background:var(--coral)">¿cómo vas con todo?</div>
+              <div style="background:var(--sun);padding:.9em"><span class="av" data-av="pinon" style="width:100%;height:100%"></span></div>
+              <div style="background:var(--sky)">Línea 106<br>gratis, 24 h</div>
+              <div style="background:var(--violet)">aquí hay una persona real</div>
+              <div style="background:var(--green)"><span><span class="ic" data-ic="pawline"></span><br>mascotas perdidas</span></div>
+              <div style="background:var(--night)">únete a la red</div>
+            </div>
+            <div class="tabbar"><span class="ic" data-ic="home"></span><span class="ic" data-ic="search"></span><span class="ic" data-ic="plus"></span><span class="ic" data-ic="reels"></span><span class="av" data-av="D" style="width:1.5em;height:1.5em;font-size:.8em;background:var(--sky)"></span></div>
+          </div>
+        </div></div>
+        <div class="pinon r" data-mood="wave"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Hook -->
+<section class="slide soft">
+  <div class="inner rev">
+    <div class="text">
+      <h2>la grúa llegó para la casa.</h2>
+      <h2 class="coral">¿quién llegó para el joven que vivía en ella?</h2>
+    </div>
+    <div class="visual" style="min-height:auto">
+      <i class="fl" data-k="cloud" style="--x:4%;--y:72%;--s:90px;--t:8s"></i>
+      <i class="fl" data-k="cloud" style="--x:70%;--y:78%;--s:70px;--d:-3s;--t:9s"></i>
+      <div data-crane style="width:min(520px,100%);position:relative;z-index:2"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Yeison -->
+<section class="slide">
+  <div class="inner">
+    <div class="text">
+      <p class="kicker">conoce a yeison, 16 años</p>
+      <h2>en una semana perdió su casa, su colegio y su perro.</h2>
+      <div class="lost">
+        <span title="casa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></svg></span>
+        <span title="colegio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M4 21V10l8-5 8 5v11zM10 21v-5h4v5M12 5V2h3"/></svg></span>
+        <span title="perro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 9 6.5 4 10 7h4l3.5-3L19 9v5a7 7 0 0 1-14 0z"/><circle cx="9.5" cy="12" r=".9" fill="currentColor"/><circle cx="14.5" cy="12" r=".9" fill="currentColor"/><path d="M11 15.2h2l-1 1.1z" fill="currentColor"/></svg></span>
+      </div>
+      <div class="quote">"Yo no estoy loco, no necesito psicólogo."</div>
+      <p class="small">Personaje ficticio.</p>
+    </div>
+    <div class="visual" style="min-height:auto">
+      <i class="fl" data-k="bubble" style="--x:76%;--y:6%;--s:54px"></i>
+      <div data-yeison style="width:min(500px,100%);position:relative;z-index:2"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Two frictions -->
+<section class="slide soft">
+  <div class="inner full">
+    <div>
+      <h2 class="title center">dos cosas se rompen.</h2>
+      <div class="frics">
+        <div class="card fric">
+          <svg viewBox="0 0 100 120" style="width:110px;flex:none"><rect x="14" y="8" width="72" height="108" rx="10" fill="#1899D6"/><rect x="20" y="10" width="60" height="102" rx="7" fill="#1CB0F6"/><rect x="28" y="20" width="44" height="34" rx="6" fill="#5FC8F8"/><rect x="28" y="62" width="44" height="40" rx="6" fill="#5FC8F8"/><circle cx="70" cy="62" r="5" fill="#FFC800"/><rect x="36" y="52" width="30" height="24" rx="6" fill="#FF4B4B"/><path d="M42 52v-6a9 9 0 0 1 18 0v6" fill="none" stroke="#FF4B4B" stroke-width="5"/><circle cx="51" cy="63" r="3.5" fill="#fff"/></svg>
+          <div><h3><span class="num-b" style="background:var(--sky)">1</span>que el joven pida ayuda</h3><p>"No necesito psicólogo." La puerta está cerrada.</p></div>
+        </div>
+        <div class="card fric">
+          <div class="cal"><small>semanas de brigada</small><div>1</div><div>2</div><div>3</div><div class="gone">4</div></div>
+          <div><h3><span class="num-b" style="background:var(--sun)">2</span>que la ayuda dure</h3><p>Las brigadas se van. El duelo se queda.</p></div>
+        </div>
+      </div>
+      <div class="fact"><span style="font-size:1.6rem">📌</span><span>La OPS señaló la salud mental como <b>la principal brecha</b> de la respuesta al sismo del 10 de agosto de 2026.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Insight (night) -->
+<section class="slide night">
+  <div class="inner rev">
+    <div class="text">
+      <p class="kicker" style="color:var(--sun)">2:07 a. m.</p>
+      <h2><span class="grad">los jóvenes ya dicen lo que sienten.</span></h2>
+      <p class="lead" style="font-size:clamp(1.2rem,2vw,1.8rem);color:#fff;font-weight:800">Lo dicen en memes. Y los primeros en verlo son sus amigos.</p>
+    </div>
+    <div class="visual">
+      <i class="fl" data-k="moon" style="--x:6%;--y:4%;--s:64px;--t:9s"></i>
+      <i class="fl" data-k="star" style="--x:84%;--y:12%;--s:30px;--d:-2s"></i>
+      <i class="fl" data-k="star" style="--x:12%;--y:70%;--s:22px;--d:-4s"></i>
+      <div class="phone-wrap">
+        <div class="iphone"><div class="screen dark" data-time="2:07">
+          <div class="story">
+            <div class="bars"><i class="done"></i><i class="run"></i><i></i></div>
+            <div class="s-head"><span class="av" data-av="Y" style="background:var(--violet)"></span><b>yeison.16</b><span>1 h</span><span class="x"><span class="ic" data-ic="more"></span><span class="ic" data-ic="close"></span></span></div>
+            <div class="meme"><p>cuando todos dicen que ya pasó pero tú sigues en el albergue</p><span data-meme></span></div>
+            <div class="s-foot"><span class="input">Enviar mensaje</span><span class="ic" data-ic="heart"></span><span class="ic" data-ic="send"></span></div>
+          </div>
+        </div></div>
+        <div class="pinon l flip" data-mood="worried"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Demo step 1 -->
+<section class="slide" data-steps="4">
+  <div class="inner">
+    <div class="text">
+      <p class="kicker">demo · paso 1</p>
+      <h2>el amigo avisa.</h2>
+      <p class="lead">Daniela (@daniela.17) ve la historia de Yeison. Con dos toques le avisa a la red.</p>
+      <ol class="steps">
+        <li><i>1</i>Daniela ve la historia.</li>
+        <li><i>2</i>Toca compartir.</li>
+        <li><i>3</i>Elige @entreamigosnoscuidamos y envía.</li>
+        <li><i>4</i>Piñón le da las gracias.</li>
+      </ol>
+      <div class="hint">clic para avanzar <b data-stepnum>1 / 4</b></div>
+    </div>
+    <div class="visual">
+      <i class="fl" data-k="heart" style="--x:82%;--y:6%;--s:46px"></i>
+      <i class="fl" data-k="paw" style="--x:4%;--y:10%;--s:42px;--d:-2s"></i>
+      <div class="phone-wrap">
+        <div class="iphone"><div class="screen dark" data-time="9:41">
+          <div class="story">
+            <div class="bars"><i class="done"></i><i class="run"></i><i></i></div>
+            <div class="s-head"><span class="av" data-av="Y" style="background:var(--violet)"></span><b>yeison.16</b><span>3 h</span><span class="x"><span class="ic" data-ic="more"></span><span class="ic" data-ic="close"></span></span></div>
+            <div class="meme"><p>cuando todos dicen que ya pasó pero tú sigues en el albergue</p><span data-meme></span></div>
+            <div class="s-foot"><span class="input">Enviar mensaje</span><span class="ic" data-ic="heart"></span><span class="ic pulse send-ic" data-ic="send"></span></div>
+          </div>
+          <div class="sheet">
+            <div class="handle"></div>
+            <div class="search"><span class="ic" data-ic="search"></span>Buscar</div>
+            <div class="acc">
+              <div><span class="av" data-av="pinon"></span>entreamigosnoscuidamos<span class="tick"><span class="ic" data-ic="check"></span></span></div>
+              <div><span class="av" data-av="C" style="background:var(--sky)"></span>camilo.r</div>
+              <div><span class="av" data-av="M" style="background:var(--green)"></span>la.mafe</div>
+              <div><span class="av" data-av="S" style="background:var(--sun)"></span>sebas_07</div>
+              <div><span class="av" data-av="V" style="background:var(--violet)"></span>valen.tina</div>
+              <div><span class="av" data-av="J" style="background:var(--coral)"></span>juanda.m</div>
+            </div>
+            <span class="worry">Me preocupa mi amigo</span>
+            <span class="sendbtn">Enviar</span>
+          </div>
+          <div class="toast"><span class="av" data-av="pinon"></span><span><b>Entre amigos nos cuidamos</b>¡Gracias por cuidar a tu amigo! Nosotros le escribimos con cuidado y nunca decimos quién avisó.<br><small>ahora</small></span></div>
+        </div></div>
+        <div class="pinon r" data-mood="point" style="transform:scaleX(-1)"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Demo step 2 -->
+<section class="slide soft" data-chat>
+  <div class="inner rev">
+    <div class="text">
+      <p class="kicker">demo · paso 2</p>
+      <h2>alguien de su edad le escribe.</h2>
+      <p class="lead">Daniel estudia grado 11 en Quibdó y quiere ser psicólogo. Está formado en Primeros Auxilios Psicológicos y lo supervisa la psicóloga de la alcaldía.</p>
+    </div>
+    <div class="visual">
+      <i class="fl" data-k="bubble" style="--x:2%;--y:4%;--s:54px"></i>
+      <i class="fl" data-k="heart" style="--x:88%;--y:74%;--s:40px;--d:-2s"></i>
+      <div class="phone-wrap">
+        <div class="iphone"><div class="screen" data-time="9:41">
+          <div class="dm">
+            <div class="dm-head"><span class="ic" data-ic="back" style="width:1.2em"></span><span class="av" data-av="pinon"></span><span><b>entreamigosnoscuidamos</b><small>Activo ahora</small></span><span class="tools"><span class="ic" data-ic="phone2"></span><span class="ic" data-ic="video"></span></span></div>
+            <div class="dm-body">
+              <div class="msg them">Hola Yeison 🐾 Soy Daniel, de la red Entre amigos nos cuidamos. Estudio en Quibdó y quiero ser psicólogo. ¿Cómo vas con todo lo del sismo?</div>
+              <div class="msg me">Normal... no sé. Mi perro se perdió.</div>
+              <div class="msg them">Uy, qué duro. ¿Tienes una foto? Hay un centro de bienestar animal con la lista de animales rescatados, lo buscamos juntos. ¿Te puedo escribir mañana?</div>
+              <div class="msg me">Bueno, dale.</div>
+              <div class="seen">Visto</div>
+              <div class="typing"><i></i><i></i><i></i></div>
+            </div>
+            <div class="dm-foot"><div class="input"><span class="cam"><span class="ic" data-ic="camera"></span></span>Mensaje...</div></div>
+          </div>
+        </div></div>
+        <div class="pinon l" data-mood="point"></div>
+        <div class="bubble" style="left:calc(var(--pw)*-.78);top:6%;--tail:70%">Detrás de mí hay una persona real, formada y supervisada. No soy un bot ni hago terapia.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Demo step 3 -->
+<section class="slide" data-count>
+  <div class="inner wide">
+    <div class="text">
+      <p class="kicker">demo · paso 3</p>
+      <h2>la red se queda.</h2>
+      <p class="lead">Las brigadas se van. La red sigue escribiendo cada semana, y el psicólogo de la alcaldía ve cada caso.</p>
+    </div>
+    <div class="card dash">
+      <div class="pinon peek" data-mood="happy" style="position:absolute"></div>
+      <div class="dash-top"><div><b>Panel de seguimiento</b><small>Psicóloga de la alcaldía · Municipio de ejemplo</small></div><span class="tag">Datos de ejemplo</span></div>
+      <div class="kpis">
+        <div class="kpi" style="--c:var(--sky)"><b data-n="48">0</b><span>Jóvenes ubicados</span></div>
+        <div class="kpi" style="--c:var(--sun-d)"><b data-n="31">0</b><span>Acompañados esta semana</span></div>
+        <div class="kpi" style="--c:var(--violet-d)"><b data-n="5">0</b><span>Remitidos</span></div>
+        <div class="kpi" style="--c:var(--green)"><b data-n="3">0</b><span>Mascotas reencontradas</span></div>
+      </div>
+      <div class="tbl"><table>
+        <thead><tr><th>Joven</th><th>Zona</th><th>Estudiante</th><th>Último contacto</th><th>Semáforo</th><th>Próximo paso</th></tr></thead>
+        <tbody>
+          <tr class="hot"><td>Karen P.</td><td>La Playita</td><td>Sofía G.</td><td>Ayer</td><td><span class="dot" style="background:var(--coral)"></span></td><td>Psicóloga: cita hoy 4:00 p. m.</td></tr>
+          <tr><td>Yeison M.</td><td>Albergue coliseo</td><td>Daniel R.</td><td>Hoy</td><td><span class="dot" style="background:var(--sun)"></span></td><td>Buscar su perro en el centro animal</td></tr>
+          <tr><td>Luisa F.</td><td>Colegio Normal</td><td>Daniel R.</td><td>Hace 2 días</td><td><span class="dot" style="background:var(--green)"></span></td><td>Charla con la orientadora</td></tr>
+          <tr><td>Andrés L.</td><td>Vereda El Tigre</td><td>Mateo C.</td><td>Hace 4 días</td><td><span class="dot" style="background:var(--green)"></span></td><td>Seguimiento en 15 días</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. How it works -->
+<section class="slide soft">
+  <div class="inner full">
+    <div>
+      <p class="kicker" style="text-align:center">cómo funciona por dentro</p>
+      <h2 class="title center">cada engranaje mueve al siguiente.</h2>
+      <div data-gears></div>
+      <div class="glabels">
+        <div>Amigo avisa<small>compartir o "me preocupa"</small></div>
+        <div>Estudiante de la red escucha<small>observa, escucha, conecta</small></div>
+        <div>Universitario acompaña<small>forma y revisa casos</small></div>
+        <div>Psicólogo de la alcaldía supervisa<small>confirma el semáforo</small></div>
+        <div>EPS · Línea 106 · Colegio · Bienestar animal<small>lo que ya existe</small></div>
+      </div>
+      <div class="sema">
+        <span class="pill"><span class="dot" style="background:var(--green)"></span>verde: acompañamiento cada 15 días</span>
+        <span class="pill"><span class="dot" style="background:var(--sun)"></span>amarillo: semanal y revisado con supervisor</span>
+        <span class="pill"><span class="dot" style="background:var(--coral)"></span>rojo: psicólogo el mismo día</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. From tomorrow -->
+<section class="slide">
+  <div class="inner full">
+    <div>
+      <p class="kicker" style="text-align:center">desde mañana</p>
+      <h2 class="title center">arrancar cuesta $0.</h2>
+      <div class="path">
+        <div class="node" style="--c:var(--green);--cd:var(--green-d)">
+          <div class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
+          <div class="when">mañana</div><p class="what">Abrimos la cuenta. Costo: $0.</p>
+        </div>
+        <div class="node" style="--c:var(--sky);--cd:var(--sky-d)">
+          <div class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5M22 9v6"/></svg></div>
+          <div class="when">en 1 mes</div><p class="what">Una facultad de salud forma a 30 estudiantes de servicio social (80 horas obligatorias).</p>
+        </div>
+        <div class="node" style="--c:var(--violet);--cd:var(--violet-d)">
+          <div class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+          <div class="when">en 3 meses</div><p class="what">Piloto en un municipio del sismo. 24 millones de pesos, con fondos que el municipio ya tiene.</p>
+        </div>
+      </div>
+      <div class="fact note"><span style="font-size:1.5rem">⚖️</span><span>La <b>Ley 2460 de 2025</b> ya creó los agentes comunitarios en salud mental.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. The ask -->
+<section class="slide soft">
+  <div class="inner asks-grid">
+    <div class="text">
+      <h2>lo que pedimos.</h2>
+      <p class="lead">Tres aliados para arrancar el piloto.</p>
+      <div class="asks" style="text-align:left">
+        <div class="ask" style="--c:var(--sky);--cd:var(--sky-d)"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6M3 10h18"/></svg></div><h3>un municipio</h3><p>Que su psicólogo supervise la red.</p></div>
+        <div class="ask" style="--c:var(--sun);--cd:var(--sun-d)"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2.5zM8 7h8M8 11h6"/></svg></div><h3>un colegio</h3><p>Que su servicio social sea en la red.</p></div>
+        <div class="ask" style="--c:var(--violet);--cd:var(--violet-d)"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z"/><path d="M12 9.5v5M9.5 12h5"/></svg></div><h3>una facultad de salud</h3><p>Que forme a los estudiantes.</p></div>
+      </div>
+    </div>
+    <div class="visual" style="min-height:auto">
+      <i class="fl" data-k="heart" style="--x:8%;--y:4%;--s:52px"></i>
+      <i class="fl" data-k="star" style="--x:78%;--y:0%;--s:42px;--d:-2s"></i>
+      <i class="fl" data-k="gear" style="--x:82%;--y:70%;--s:50px;--d:-1s"></i>
+      <div class="pinon static" data-mood="happy" style="position:relative;z-index:2"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12. Closing -->
+<section class="slide s12">
+  <div class="wave"><svg viewBox="0 0 1440 400" preserveAspectRatio="none"><path d="M0 120 C 240 40 420 40 620 110 S 1080 210 1440 80 V400 H0Z" fill="#FF4B4B"/><path d="M0 170 C 260 100 460 110 660 160 S 1100 240 1440 140 V400 H0Z" fill="#D93A3A" opacity=".35"/></svg></div>
+  <div class="closing">
+    <h2>la grúa reconstruye la casa.<br><span class="coral">entre amigos, nos cuidamos.</span></h2>
+    <div class="row">
+      <div class="crane-s" data-crane-small></div>
+      <div class="phone-wrap">
+        <div class="iphone"><div class="screen" data-time="9:41">
+          <div class="dm">
+            <div class="dm-head"><span class="ic" data-ic="back" style="width:1.2em"></span><span class="av" data-av="pinon"></span><span><b>entreamigosnoscuidamos</b><small>Activo ahora</small></span></div>
+            <div class="dm-body">
+              <div class="msg me in">Bueno, dale.</div>
+              <div class="msg them in">¡Yeison! Tu perro está en el centro de bienestar animal 🐾 ¿Vamos mañana por él?</div>
+              <div class="msg me in">gracias por escribirme 🐶</div>
+              <div class="seen in">Visto</div>
+            </div>
+            <div class="dm-foot"><div class="input"><span class="cam"><span class="ic" data-ic="camera"></span></span>Mensaje...</div></div>
+          </div>
+        </div></div>
+      </div>
+      <div class="pinon static jump" data-mood="heart"></div>
+    </div>
+  </div>
+  <i class="fl" data-k="heart" style="--x:12%;--y:22%;--s:44px"></i>
+  <i class="fl" data-k="paw" style="--x:84%;--y:20%;--s:44px;--d:-2s"></i>
+  <i class="fl" data-k="star" style="--x:90%;--y:52%;--s:30px;--d:-3s"></i>
+  <p class="line106">Si tú o alguien que conoces está en riesgo: <b>Línea 106</b>, gratis, 24 horas.</p>
+</section>
+
+</main>
+
+<nav class="nav" id="dots"></nav>
+<div class="num" id="num"></div>
+
+<script>
+// Palette
+const C = {G:'#F2A93B',GD:'#D98E22',E:'#C97A1C',CR:'#FFE6BF',R:'#FF4B4B',RD:'#D93A3A',Y:'#FFC800',YD:'#E0A800',N:'#2B2D42',S:'#1CB0F6',SD:'#1899D6',V:'#CE82FF',VD:'#A560E0'};
+
+// Gear outline as an SVG path
+function gearPath(cx, cy, R, teeth){
+  const r = R*0.8, s = Math.PI/teeth, pts = [];
+  for (let i = 0; i < teeth; i++){
+    const a = i/teeth*2*Math.PI;
+    [[r,a-s*.55],[R,a-s*.32],[R,a+s*.32],[r,a+s*.55]].forEach(([rr,aa]) => pts.push([cx+rr*Math.cos(aa), cy+rr*Math.sin(aa)]));
+  }
+  return 'M' + pts.map(p => p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L') + 'Z';
+}
+function starPoints(cx, cy, R, r){
+  const p = [];
+  for (let i = 0; i < 10; i++){
+    const rad = i%2 ? r : R, a = -Math.PI/2 + i*Math.PI/5;
+    p.push((cx+rad*Math.cos(a)).toFixed(1)+','+(cy+rad*Math.sin(a)).toFixed(1));
+  }
+  return p.join(' ');
+}
+
+// Mascot: Pinon the golden retriever
+function pinon(mood){
+  const {G,GD,E,CR,R,RD,Y,N} = C;
+  const earOut = mood==='worried' ? 3 : mood==='happy'||mood==='heart' ? 20 : 13;
+  const earDrop = mood==='worried' ? 7 : 0;
+  const dy = mood==='worried' ? 3 : 0;
+  const armDown = (x, rot, px) => `<ellipse cx="${x}" cy="168" rx="13" ry="24" fill="${G}" transform="rotate(${rot} ${x} 168)"/><ellipse cx="${px}" cy="190" rx="12" ry="9" fill="${CR}"/>`;
+  let arms = armDown(60,16,56) + armDown(140,-16,144);
+  let extra = '';
+  if (mood==='wave') arms = armDown(60,16,56) + `<g class="p-wave"><ellipse cx="156" cy="122" rx="13" ry="27" fill="${G}" transform="rotate(35 156 122)"/><circle cx="168" cy="99" r="13" fill="${CR}"/></g>`;
+  if (mood==='point') arms = armDown(60,16,56) + `<ellipse cx="166" cy="148" rx="30" ry="12" fill="${G}" transform="rotate(-14 166 148)"/><circle cx="194" cy="141" r="12" fill="${CR}"/>`;
+  if (mood==='heart') arms = `<ellipse cx="74" cy="160" rx="12" ry="22" fill="${G}" transform="rotate(-35 74 160)"/><ellipse cx="126" cy="160" rx="12" ry="22" fill="${G}" transform="rotate(35 126 160)"/>`
+    + `<path d="M100 186C80 172 74 162 77 152a11 11 0 0 1 23-3 11 11 0 0 1 23 3c3 10-3 20-23 34z" fill="${RD}" transform="translate(0 3)"/><path d="M100 186C80 172 74 162 77 152a11 11 0 0 1 23-3 11 11 0 0 1 23 3c3 10-3 20-23 34z" fill="${R}"/><ellipse cx="88" cy="155" rx="4" ry="2.6" fill="#fff" opacity=".6" transform="rotate(-30 88 155)"/>`
+    + `<ellipse cx="80" cy="166" rx="10" ry="8" fill="${CR}"/><ellipse cx="120" cy="166" rx="10" ry="8" fill="${CR}"/>`;
+  let mouth;
+  if (mood==='happy') mouth = `<path d="M86 100 Q100 122 114 100 Z" fill="#7A2430"/><ellipse cx="100" cy="112" rx="7.5" ry="9" fill="#FF7A93"/><path d="M100 106v8" stroke="#E25A75" stroke-width="1.6"/>`;
+  else if (mood==='worried') mouth = `<path d="M100 95v5M91 109 Q100 102 109 109" stroke="${N}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  else mouth = `<path d="M100 95v5M89 100 Q94.5 107 100 100 Q105.5 107 111 100" stroke="${N}" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const brows = mood==='worried' ? `<path d="M71 57 L90 51M129 57 L110 51" stroke="${E}" stroke-width="4" stroke-linecap="round"/>` : '';
+  return `<svg viewBox="0 0 210 222" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="100" cy="215" rx="58" ry="6" fill="rgba(43,45,66,.10)"/>
+  <g class="p-body">
+    <path class="p-tail" d="M138 172 Q184 162 180 118 Q170 150 140 156 Z" fill="${E}"/>
+    <ellipse cx="100" cy="171" rx="50" ry="42" fill="${GD}"/>
+    <ellipse cx="100" cy="166" rx="50" ry="42" fill="${G}"/>
+    <ellipse cx="76" cy="205" rx="18" ry="10" fill="${GD}"/><ellipse cx="124" cy="205" rx="18" ry="10" fill="${GD}"/>
+    <ellipse cx="76" cy="202" rx="18" ry="10" fill="${G}"/><ellipse cx="124" cy="202" rx="18" ry="10" fill="${G}"/>
+    <path d="M70 199v5M76 198v6M82 199v5M118 199v5M124 198v6M130 199v5" stroke="${GD}" stroke-width="2" stroke-linecap="round"/>
+    <path d="M56 136 Q100 120 144 136 L148 186 Q100 204 52 186 Z" fill="${RD}" transform="translate(0 4)"/>
+    <path d="M56 136 Q100 120 144 136 L148 186 Q100 204 52 186 Z" fill="${R}"/>
+    <path d="M51 170 Q100 184 149 170 L149 178 Q100 192 51 178 Z" fill="${Y}"/>
+    <path d="${gearPath(100,149,12,8)}" fill="${Y}"/><circle cx="100" cy="149" r="4" fill="${R}"/>
+    <circle cx="100" cy="84" r="48" fill="${GD}"/>
+    <circle cx="100" cy="78" r="48" fill="${G}"/>
+    <ellipse cx="57" cy="${86+earDrop}" rx="16" ry="30" fill="${E}" transform="rotate(${earOut} 60 58)"/>
+    <ellipse cx="143" cy="${86+earDrop}" rx="16" ry="30" fill="${E}" transform="rotate(${-earOut} 140 58)"/>
+    <circle cx="67" cy="93" r="6.5" fill="#FF8A8A" opacity=".45"/><circle cx="133" cy="93" r="6.5" fill="#FF8A8A" opacity=".45"/>
+    <ellipse cx="100" cy="99" rx="25" ry="18" fill="${CR}"/>
+    <g class="p-eyes">
+      <ellipse cx="82" cy="71" rx="10.5" ry="12.5" fill="#fff"/><ellipse cx="118" cy="71" rx="10.5" ry="12.5" fill="#fff"/>
+      <circle cx="84" cy="${73+dy}" r="6.8" fill="${N}"/><circle cx="120" cy="${73+dy}" r="6.8" fill="${N}"/>
+      <circle cx="86.5" cy="${70+dy}" r="2.4" fill="#fff"/><circle cx="122.5" cy="${70+dy}" r="2.4" fill="#fff"/>
+    </g>
+    ${brows}
+    <ellipse cx="100" cy="89" rx="9" ry="6.5" fill="${N}"/><ellipse cx="97" cy="87" rx="3" ry="1.6" fill="#fff" opacity=".7"/>
+    ${mouth}
+    ${arms}
+  </g></svg>`;
+}
+
+// Small round head used as the Instagram avatar
+function pinonHead(){
+  const {G,E,CR,R,N} = C;
+  return `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#FFE9A8"/>
+  <ellipse cx="23" cy="58" rx="11" ry="20" fill="${E}" transform="rotate(14 25 40)"/><ellipse cx="77" cy="58" rx="11" ry="20" fill="${E}" transform="rotate(-14 75 40)"/>
+  <circle cx="50" cy="52" r="29" fill="${G}"/><ellipse cx="50" cy="65" rx="15" ry="10.5" fill="${CR}"/>
+  <ellipse cx="39" cy="47" rx="6" ry="7" fill="#fff"/><ellipse cx="61" cy="47" rx="6" ry="7" fill="#fff"/>
+  <circle cx="40" cy="48" r="4" fill="${N}"/><circle cx="62" cy="48" r="4" fill="${N}"/>
+  <ellipse cx="50" cy="59" rx="5.5" ry="4" fill="${N}"/>
+  <path d="M30 88 Q50 96 70 88 L74 100 L26 100Z" fill="${R}"/></svg>`;
+}
+
+// Floating decorative objects
+const HEART = 'M30 52C12 40 5 30 8 20a11 11 0 0 1 22-3 11 11 0 0 1 22 3c3 10-4 20-22 32z';
+function pawShapes(c){ return `<g fill="${c}"><ellipse cx="30" cy="40" rx="13" ry="11"/><circle cx="15" cy="25" r="6"/><circle cx="25" cy="15" r="6"/><circle cx="36" cy="15" r="6"/><circle cx="46" cy="25" r="6"/></g>`; }
+const FLOAT = {
+  heart: () => `<svg viewBox="0 0 60 60"><path d="${HEART}" fill="${C.RD}" transform="translate(0 4)"/><path d="${HEART}" fill="${C.R}"/><ellipse cx="19" cy="20" rx="5" ry="3.4" fill="#fff" opacity=".55" transform="rotate(-30 19 20)"/></svg>`,
+  paw: () => `<svg viewBox="0 0 60 60"><g transform="translate(0 4)">${pawShapes(C.SD)}</g>${pawShapes(C.S)}</svg>`,
+  gear: () => `<svg viewBox="0 0 60 60"><path d="${gearPath(30,30,26,9)}" fill="${C.YD}" transform="translate(0 3)"/><path d="${gearPath(30,30,26,9)}" fill="${C.Y}"/><circle cx="30" cy="30" r="8" fill="#fff"/></svg>`,
+  star: () => `<svg viewBox="0 0 60 60"><polygon points="${starPoints(30,32,27,12)}" fill="${C.YD}"/><polygon points="${starPoints(30,29,27,12)}" fill="${C.Y}"/></svg>`,
+  bubble: () => `<svg viewBox="0 0 60 60"><g transform="translate(0 4)"><path d="M10 8h40a8 8 0 0 1 8 8v18a8 8 0 0 1-8 8H28l-12 10V42h-6a8 8 0 0 1-8-8V16a8 8 0 0 1 8-8z" fill="${C.VD}"/></g><path d="M10 8h40a8 8 0 0 1 8 8v18a8 8 0 0 1-8 8H28l-12 10V42h-6a8 8 0 0 1-8-8V16a8 8 0 0 1 8-8z" fill="${C.V}"/><circle cx="19" cy="25" r="3.5" fill="#fff"/><circle cx="30" cy="25" r="3.5" fill="#fff"/><circle cx="41" cy="25" r="3.5" fill="#fff"/></svg>`,
+  cloud: () => `<svg viewBox="0 0 90 50"><g fill="#E3E8F2"><circle cx="25" cy="32" r="16"/><circle cx="45" cy="24" r="20"/><circle cx="66" cy="32" r="15"/><rect x="20" y="30" width="50" height="18" rx="9"/></g></svg>`,
+  moon: () => `<svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" fill="#FFE9A8"/><circle cx="42" cy="22" r="20" fill="#131F48"/></svg>`,
+};
+
+// Line icons for the phone screens
+const ICON = {
+  heart:'<path d="M12 20s-7-4.4-9.3-9A5 5 0 0 1 12 6a5 5 0 0 1 9.3 5C19 15.6 12 20 12 20z"/>',
+  send:'<path d="M22 3 10 14M22 3l-7 18-5-7-7-4z"/>',
+  home:'<path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
+  reels:'<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M3 8h18M8 3l3 5M13 3l3 5"/><path d="M10 11.5v5l4.5-2.5z" fill="currentColor"/>',
+  plus:'<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/>',
+  back:'<path d="M15 5l-7 7 7 7"/>',
+  more:'<circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="19" cy="12" r="1.3" fill="currentColor"/>',
+  close:'<path d="M6 6l12 12M18 6 6 18"/>',
+  check:'<path d="m5 12 5 5 9-10"/>',
+  bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/>',
+  phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+  phone2:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+  video:'<rect x="2" y="6" width="14" height="12" rx="3"/><path d="m16 10 6-3v10l-6-3z"/>',
+  camera:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+  gearline:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>',
+  pawline:'<ellipse cx="12" cy="15.5" rx="4.5" ry="3.8"/><circle cx="6" cy="10" r="1.8"/><circle cx="9.5" cy="6.5" r="1.8"/><circle cx="14.5" cy="6.5" r="1.8"/><circle cx="18" cy="10" r="1.8"/>',
+};
+const STATUS = '<svg viewBox="0 0 74 14"><g fill="currentColor"><rect x="0" y="9" width="3.2" height="4" rx="1"/><rect x="4.6" y="6.5" width="3.2" height="6.5" rx="1"/><rect x="9.2" y="4" width="3.2" height="9" rx="1"/><rect x="13.8" y="1" width="3.2" height="12" rx="1"/></g><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M24 5.5a10 10 0 0 1 14 0"/><path d="M26.8 8.6a6 6 0 0 1 8.4 0"/></g><circle cx="31" cy="11.6" r="1.6" fill="currentColor"/><rect x="46" y="1.5" width="23" height="11" rx="3.2" fill="none" stroke="currentColor" opacity=".45"/><rect x="48" y="3.5" width="19" height="7" rx="1.8" fill="currentColor"/><rect x="70.5" y="5" width="1.6" height="4" rx=".8" fill="currentColor" opacity=".45"/></svg>';
+
+// Story meme illustration: a teen awake at night in a shelter
+const MEME = `<svg viewBox="0 0 200 120"><rect width="200" height="120" fill="#1D2340"/>
+  <circle cx="168" cy="24" r="10" fill="#FFE9A8"/><circle cx="174" cy="20" r="9" fill="#1D2340"/>
+  <g fill="#fff" opacity=".7"><circle cx="30" cy="18" r="1.2"/><circle cx="70" cy="30" r="1"/><circle cx="120" cy="14" r="1.3"/><circle cx="145" cy="40" r="1"/></g>
+  <rect x="0" y="94" width="200" height="26" fill="#2B3566"/>
+  <rect x="10" y="90" width="48" height="10" rx="5" fill="#3E4A85"/><rect x="142" y="90" width="50" height="10" rx="5" fill="#3E4A85"/>
+  <rect x="64" y="92" width="74" height="12" rx="6" fill="#1CB0F6"/>
+  <ellipse cx="100" cy="80" rx="17" ry="17" fill="#CE82FF"/>
+  <path d="M86 90 Q100 74 116 90" fill="#A560E0"/>
+  <circle cx="100" cy="58" r="11" fill="#8D5524"/><path d="M89 55 Q92 44 100 45 Q110 44 111 55 Q105 50 100 51 Q94 50 89 55z" fill="#2B1B12"/>
+  <rect x="104" y="70" width="8" height="13" rx="2" fill="#E8F3FF"/><circle cx="108" cy="76" r="14" fill="#BFE6FF" opacity=".18"/>
+  <text x="166" y="112" font-family="Arial" font-size="9" fill="#9AA4D6">2:07</text></svg>`;
+
+// Crane lifting a broken house
+function crane(){
+  const lattice = [];
+  for (let y = 90; y < 396; y += 24) lattice.push(`M64 ${y}L90 ${y+24}M90 ${y}L64 ${y+24}`);
+  const jib = [];
+  for (let x = 96; x < 450; x += 24) jib.push(`M${x} 82L${x+12} 100L${x+24} 82`);
+  return `<svg viewBox="0 0 520 430" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="260" cy="412" rx="250" ry="14" fill="rgba(43,45,66,.08)"/>
+  <g fill="#C9CED9"><path d="M300 410l18-26 22 8 14-14 26 32z"/><path d="M380 410l10-18 22 4 12 14z"/><rect x="250" y="396" width="34" height="14" rx="4"/></g>
+  <rect x="40" y="396" width="76" height="16" rx="6" fill="#8A93A8"/>
+  <rect x="60" y="80" width="34" height="320" fill="${C.Y}"/><rect x="86" y="80" width="8" height="320" fill="${C.YD}"/>
+  <path d="${lattice.join('')}" stroke="${C.YD}" stroke-width="3"/>
+  <rect x="20" y="78" width="440" height="24" rx="4" fill="${C.Y}"/><rect x="20" y="96" width="440" height="6" fill="${C.YD}"/>
+  <path d="${jib.join('')}" stroke="${C.YD}" stroke-width="3" fill="none"/>
+  <rect x="18" y="102" width="36" height="34" rx="5" fill="#8A93A8"/>
+  <path d="M66 78 L80 24 L94 78" fill="${C.Y}"/><path d="M80 24 L452 80M80 24 L24 80" stroke="#8A93A8" stroke-width="2.5"/>
+  <rect x="48" y="118" width="58" height="46" rx="10" fill="${C.R}"/><rect x="56" y="126" width="42" height="20" rx="5" fill="#BDE8FD"/>
+  <rect x="326" y="100" width="30" height="16" rx="4" fill="#5B6478"/>
+  <path d="M341 116 V196" stroke="#5B6478" stroke-width="3"/>
+  <path d="M334 196 h14 v8 a7 7 0 1 1 -14 0" fill="none" stroke="#5B6478" stroke-width="4"/>
+  <g transform="rotate(-6 341 260)">
+    <path d="M341 206 L286 236 M341 206 L396 236" stroke="#5B6478" stroke-width="2.5"/>
+    <path d="M276 240 L341 190 L406 240 Z" fill="${C.RD}"/>
+    <path d="M276 236 L341 186 L406 236 L392 236 L372 214 L360 230 L346 204 L341 200 Z" fill="${C.R}"/>
+    <rect x="286" y="236" width="110" height="90" rx="6" fill="#FFF1DA"/>
+    <rect x="286" y="316" width="110" height="10" fill="#F2DDBA"/>
+    <rect x="300" y="254" width="30" height="28" rx="4" fill="#BDE8FD"/><path d="M302 256 L318 270 L310 280" stroke="#fff" stroke-width="2" fill="none"/>
+    <rect x="350" y="268" width="28" height="58" rx="4" fill="${C.S}"/><circle cx="372" cy="298" r="3" fill="${C.Y}"/>
+    <path d="M336 238 l-6 22 l10 10 l-8 22" stroke="#C99A62" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  <g fill="#E3E8F2" opacity=".9"><circle cx="250" cy="400" r="12"/><circle cx="268" cy="394" r="16"/><circle cx="440" cy="402" r="12"/><circle cx="456" cy="396" r="9"/></g>
+  </svg>`;
+}
+
+// Yeison sitting on a shelter mattress
+function yeison(){
+  return `<svg viewBox="0 0 460 400" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="20" width="440" height="330" rx="34" fill="#F0F8FF"/>
+  <g fill="#DCEBFA"><path d="M60 140a40 40 0 0 1 80 0v40H60z"/><path d="M190 140a40 40 0 0 1 80 0v40h-80z"/><path d="M320 140a40 40 0 0 1 80 0v40h-80z"/></g>
+  <rect x="30" y="300" width="110" height="20" rx="10" fill="#D6E2F2"/><rect x="340" y="300" width="96" height="20" rx="10" fill="#D6E2F2"/>
+  <ellipse cx="230" cy="372" rx="190" ry="12" fill="rgba(43,45,66,.08)"/>
+  <rect x="70" y="316" width="320" height="50" rx="22" fill="${C.SD}"/>
+  <rect x="70" y="306" width="320" height="50" rx="22" fill="${C.S}"/>
+  <path d="M90 330h280" stroke="#fff" stroke-width="4" stroke-dasharray="2 14" stroke-linecap="round" opacity=".7"/>
+  <path d="M190 304 Q182 228 214 200 L246 200 Q272 228 264 304 Z" fill="${C.VD}" transform="translate(0 4)"/>
+  <path d="M190 304 Q182 228 214 200 L246 200 Q272 228 264 304 Z" fill="${C.V}"/>
+  <polyline points="232,298 292,240 312,298" fill="none" stroke="#2F3C7A" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="222,300 280,246 298,300" fill="none" stroke="#3B4A8C" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  <ellipse cx="304" cy="306" rx="22" ry="10" fill="#fff"/><ellipse cx="320" cy="304" rx="20" ry="9" fill="#F2F2F2"/>
+  <path d="M246 226 Q276 244 290 236" fill="none" stroke="${C.VD}" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="294" cy="234" r="11" fill="#8D5524"/>
+  <rect x="216" y="186" width="22" height="22" rx="8" fill="#7A4A1F"/>
+  <circle cx="228" cy="164" r="36" fill="#8D5524"/>
+  <path d="M192 160 Q190 122 228 124 Q266 122 264 160 Q252 140 228 142 Q204 140 192 160z" fill="#2B1B12"/>
+  <circle cx="200" cy="138" r="8" fill="#2B1B12"/><circle cx="214" cy="128" r="9" fill="#2B1B12"/><circle cx="232" cy="124" r="9" fill="#2B1B12"/><circle cx="250" cy="130" r="9" fill="#2B1B12"/>
+  <path d="M190 166 Q188 112 228 112 Q268 112 266 166" fill="none" stroke="${C.N}" stroke-width="8" stroke-linecap="round"/>
+  <rect x="180" y="152" width="18" height="30" rx="8" fill="${C.R}"/><rect x="258" y="152" width="18" height="30" rx="8" fill="${C.R}"/>
+  <path d="M212 172 q6 4 12 0M236 172 q6 4 12 0" stroke="#3A2210" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M220 190 h16" stroke="#3A2210" stroke-width="3" stroke-linecap="round"/>
+  </svg>`;
+}
+
+// Gear chain diagram
+function gearsDiagram(){
+  const cols = [[C.R,'#D93A3A'],[C.Y,C.YD],[C.S,C.SD],[C.V,C.VD],['#58CC02','#46A302']];
+  const R = 92, teeth = 12, gap = 2*R*0.9;
+  let out = '';
+  cols.forEach(([c,d], i) => {
+    const cx = 100 + i*gap, cy = 120;
+    const phase = i%2 ? 180/teeth : 0;
+    out += `<g transform="rotate(${phase} ${cx} ${cy})"><g class="spin${i%2?' rev':''}"><path d="${gearPath(cx,cy+6,R,teeth)}" fill="${d}"/><path d="${gearPath(cx,cy,R,teeth)}" fill="${c}"/></g></g>`;
+    out += `<circle cx="${cx}" cy="${cy}" r="40" fill="#fff"/><text x="${cx}" y="${cy+14}" text-anchor="middle" font-family="Nunito" font-weight="900" font-size="40" fill="${d}">${i+1}</text>`;
+  });
+  const w = 200 + 4*gap;
+  return `<svg class="gears" viewBox="0 0 ${w} 240" xmlns="http://www.w3.org/2000/svg">${out}</svg>`;
+}
+
+// Render everything
+document.querySelectorAll('[data-logo]').forEach(el => el.innerHTML = `<svg viewBox="0 0 60 60"><path d="${gearPath(30,32,27,9)}" fill="${C.RD}"/><path d="${gearPath(30,29,27,9)}" fill="${C.R}"/><g transform="translate(16.5 14) scale(.45)">${pawShapes('#fff')}</g></svg>`);
+document.querySelectorAll('.pinon').forEach(el => el.innerHTML = pinon(el.dataset.mood));
+document.querySelectorAll('.fl').forEach(el => el.innerHTML = FLOAT[el.dataset.k]());
+document.querySelectorAll('[data-ic]').forEach(el => el.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[el.dataset.ic]}</svg>`);
+document.querySelectorAll('[data-av]').forEach(el => el.dataset.av === 'pinon' ? el.innerHTML = pinonHead() : el.textContent = el.dataset.av);
+document.querySelectorAll('[data-meme]').forEach(el => el.innerHTML = MEME);
+document.querySelectorAll('[data-crane]').forEach(el => el.innerHTML = crane());
+document.querySelectorAll('[data-crane-small]').forEach(el => el.innerHTML = crane());
+document.querySelectorAll('[data-yeison]').forEach(el => el.innerHTML = yeison());
+document.querySelectorAll('[data-gears]').forEach(el => el.innerHTML = gearsDiagram());
+document.querySelectorAll('.screen').forEach(s => {
+  s.insertAdjacentHTML('afterbegin', `<div class="island"></div><div class="status"><span>${s.dataset.time||'9:41'}</span>${STATUS}</div>`);
+  s.insertAdjacentHTML('beforeend', '<div class="home-ind"></div>');
+});
+
+// Deck navigation
+const slides = [...document.querySelectorAll('.slide')];
+const dots = document.getElementById('dots');
+const num = document.getElementById('num');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let cur = 0, step = 0, timers = [];
+
+slides.forEach((_, i) => {
+  const b = document.createElement('button');
+  b.setAttribute('aria-label', 'Diapositiva ' + (i+1));
+  b.dataset.noadvance = '';
+  b.onclick = () => show(i);
+  dots.appendChild(b);
+});
+
+function stepsOf(i){ return +(slides[i].dataset.steps || 1); }
+
+function applyStep(){
+  const s = slides[cur];
+  s.dataset.step = step;
+  s.querySelectorAll('.steps li').forEach((li, k) => li.classList.toggle('on', k <= step));
+  const sn = s.querySelector('[data-stepnum]');
+  if (sn) sn.textContent = (step+1) + ' / ' + stepsOf(cur);
+}
+
+function playChat(s){
+  const msgs = [...s.querySelectorAll('.msg')], typing = s.querySelector('.typing'), seen = s.querySelector('.seen');
+  msgs.forEach(m => m.classList.remove('in')); typing.classList.remove('in'); seen.classList.remove('in');
+  if (reduce){ msgs.forEach(m => m.classList.add('in')); seen.classList.add('in'); return; }
+  let t = 600;
+  msgs.forEach(m => {
+    if (m.classList.contains('them')){
+      timers.push(setTimeout(() => typing.classList.add('in'), t));
+      t += 1400;
+    } else t += 900;
+    timers.push(setTimeout(() => { typing.classList.remove('in'); m.classList.add('in'); }, t));
+    t += 700;
+  });
+  timers.push(setTimeout(() => seen.classList.add('in'), t + 300));
+}
+
+function countUp(s){
+  s.querySelectorAll('[data-n]').forEach(el => {
+    const target = +el.dataset.n;
+    if (reduce){ el.textContent = target; return; }
+    const t0 = performance.now();
+    const tick = now => {
+      const p = Math.min(1, (now - t0) / 1100);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+}
+
+function show(i, s = 0){
+  i = Math.max(0, Math.min(slides.length - 1, i));
+  timers.forEach(clearTimeout); timers = [];
+  cur = i; step = s;
+  slides.forEach((el, k) => { el.classList.toggle('active', k === i); el.classList.toggle('before', k < i); });
+  [...dots.children].forEach((d, k) => d.classList.toggle('on', k === i));
+  num.textContent = (i+1) + ' / ' + slides.length;
+  document.body.classList.toggle('dark', slides[i].classList.contains('night'));
+  document.body.classList.toggle('last', i === slides.length - 1 && innerWidth > 820);
+  applyStep();
+  const el = slides[i];
+  if (el.hasAttribute('data-chat')) playChat(el);
+  if (el.hasAttribute('data-count')) countUp(el);
+  el.scrollTop = 0;
+  history.replaceState(null, '', '#' + (i+1));
+}
+
+function next(){ if (step < stepsOf(cur) - 1){ step++; applyStep(); } else if (cur < slides.length - 1) show(cur + 1); }
+function prev(){ if (step > 0){ step--; applyStep(); } else if (cur > 0) show(cur - 1, stepsOf(cur - 1) - 1); }
+
+document.addEventListener('keydown', e => {
+  if (['ArrowRight','PageDown',' ','Enter'].includes(e.key)){ e.preventDefault(); next(); }
+  else if (['ArrowLeft','PageUp','Backspace'].includes(e.key)){ e.preventDefault(); prev(); }
+  else if (e.key === 'Home') show(0);
+  else if (e.key === 'End') show(slides.length - 1);
+  else if (e.key.toLowerCase() === 'f'){
+    if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen?.();
+  }
+});
+document.addEventListener('click', e => {
+  const go = e.target.closest('[data-go]');
+  if (go){ show(+go.dataset.go - 1); return; }
+  if (e.target.closest('[data-noadvance], .topbar, .nav')) return;
+  next();
+});
+let tx = null;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e => {
+  if (tx === null) return;
+  const dx = e.changedTouches[0].clientX - tx; tx = null;
+  if (Math.abs(dx) > 50){ dx < 0 ? next() : prev(); }
+});
+
+const start = parseInt(location.hash.slice(1), 10);
+show(Number.isFinite(start) ? start - 1 : 0);
+</script>
+</body>
+</html>

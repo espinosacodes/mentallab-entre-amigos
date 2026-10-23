@@ -1,0 +1,50 @@
+flowchart LR
+    subgraph F0["0 · Antes del desastre"]
+        direction TB
+        A1["Colegio y alcaldía<br/>firman convenio"]
+        A2["Estudiantes de 10 y 11<br/>se forman en PAP"]
+        A1 --> A2
+    end
+    subgraph F1["1 · Semana 1"]
+        direction TB
+        B1["Consejo de Gestión<br/>del Riesgo activa la red"]
+        B2["Duplas hacen el censo:<br/>¿dónde está cada joven?"]
+        B1 --> B2
+    end
+    subgraph F2["2 · Semanas 1 a 4"]
+        direction TB
+        C1["Brigada atiende<br/>la emergencia"]
+        C2["Par hace primer contacto:<br/>escucha, pregunta por animales,<br/>da información práctica"]
+        C1 -.-> C2
+    end
+    subgraph F3["3 · La brigada se va"]
+        direction TB
+        D1["Brigada entrega casos<br/>a la psicóloga y a la red"]
+    end
+    subgraph F4["4 · Meses 1 a 12"]
+        direction TB
+        E1["Par acompaña cada semana:<br/>parches, colegio, rituales"]
+        E2{"¿Señal de<br/>alerta?"}
+        E3["Psicóloga de la alcaldía<br/>atiende el mismo día"]
+        E4["Línea 106 · 141 ·<br/>ESE · ICBF"]
+        E1 --> E2
+        E2 -- sí --> E3 --> E4
+        E2 -- no --> E1
+    end
+    subgraph F5["5 · Cierre"]
+        direction TB
+        G1["Cohorte nueva<br/>recibe la red"]
+    end
+    A2 --> B1
+    B2 --> C2
+    C2 --> D1
+    D1 --> E1
+    E1 --> G1
+    G1 -. cada año .-> A2
+
+    classDef red fill:#fde7d7,stroke:#e8590c,color:#222
+    classDef inst fill:#e7f0fd,stroke:#1c7ed6,color:#222
+    classDef alert fill:#ffe3e3,stroke:#c92a2a,color:#222
+    class A2,B2,C2,E1,G1 red
+    class A1,B1,C1,D1,E3,E4 inst
+    class E2 alert

@@ -1,0 +1,20 @@
+%%{init: {"flowchart": {"wrappingWidth": 620}} }%%
+flowchart TB
+    E["<b>EVENTOS · lo visible</b><br/>Jóvenes con insomnio, ansiedad y miedo a cada réplica.<br/>Dejan el colegio y se aíslan meses después del desastre"]
+    W["SUPERFICIE DEL AGUA · lo de abajo no se ve, pero es lo que sostiene el problema"]
+    P["<b>PATRONES · ¿qué se repite?</b><br/>La atención psicosocial aparece en la emergencia<br/>y se va cuando esta termina, justo cuando el dolor empieza a notarse"]
+    S["<b>ESTRUCTURAS · ¿qué lo habilita? · CAUSA RAÍZ</b><br/>El cuidado depende solo de profesionales con contratos cortos.<br/>El registro de damnificados cuenta hogares, no jóvenes.<br/>El sistema no usa a la gente que siempre está en el territorio"]
+    M["<b>MODELOS MENTALES · ¿qué creencias lo sostienen?</b><br/>«Lo importante es reconstruir la casa»<br/>«Los jóvenes se recuperan solos»<br/>«Hablar del miedo es quedarse en el pasado»"]
+
+    E --- W --- P --- S --- M
+
+    classDef visible fill:#ffffff,stroke:#5d8aa8,color:#222
+    classDef water fill:#5d8aa8,stroke:#5d8aa8,color:#fff
+    classDef pat fill:#cfe2f3,stroke:#3d6e99,color:#222
+    classDef str fill:#2c3e50,stroke:#000,color:#fff
+    classDef mm fill:#1b2631,stroke:#000,color:#fff
+    class E visible
+    class W water
+    class P pat
+    class S str
+    class M mm

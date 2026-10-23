@@ -1,0 +1,49 @@
+flowchart TB
+    J(("Joven afectado<br/>perdió su ancla"))
+
+    subgraph CENTRO["CENTRO · Entre amigos nos cuidamos"]
+        direction TB
+        PSI["Psicólogo de la alcaldía<br/>supervisa"]
+        UNI["Universitarios de salud<br/>forman y acompañan"]
+        EST["Estudiantes de servicio social<br/>y voluntarios jóvenes<br/>observan, escuchan, conectan"]
+        PSI --> UNI --> EST
+    end
+
+    subgraph HERR["Herramientas de la red"]
+        direction LR
+        SEM["1 · Semáforo de prioridad"]
+        ATE["2 · Aterrizaje emocional:<br/>recuperar el ancla"]
+        MAS["6 · Duelo por mascotas"]
+        PV["7 · Proyecto de vida"]
+    end
+
+    subgraph COMU["Comunidad alrededor"]
+        direction LR
+        FAM["4 · Familias y profesores<br/>formados en PAP"]
+        CAN["5 · Canal<br/>¿A alguien le pasó algo?"]
+        RS["8 · Redes sociales"]
+    end
+
+    subgraph EXIST["3 · Lo que ya existe"]
+        direction LR
+        EPS["EPS · IPS · Línea 106"]
+        ICBF["ICBF · Línea 141"]
+        EDU["Colegio · universidad"]
+        ALC["Alcaldía: empleo,<br/>vivienda, Gestión del Riesgo"]
+        ANI["Centro de<br/>bienestar animal"]
+    end
+
+    BRI["Brigadas que se van"] -- entregan casos --> CENTRO
+    FAM -- avisan --> CAN
+    RS -- difunden --> CAN
+    CAN -- aviso --> EST
+    EST -- busca y escucha --> J
+    EST --> HERR
+    HERR --> J
+    EST -- conecta --> EXIST
+    EXIST --> J
+
+    classDef core fill:#e8590c,stroke:#a33e06,color:#fff
+    classDef youth fill:#fde7d7,stroke:#e8590c,color:#222
+    class PSI,UNI,EST core
+    class J youth

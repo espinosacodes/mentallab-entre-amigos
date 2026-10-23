@@ -1,0 +1,46 @@
+flowchart TB
+    J(("Joven afectado<br/>14 a 28 años"))
+    R["ENTRE AMIGOS NOS CUIDAMOS<br/>jóvenes de servicio social y voluntarios<br/>formados en PAP"]
+
+    subgraph INST["Autoridades locales"]
+        CMGRD["Consejo Municipal de<br/>Gestión del Riesgo"]
+        SAL["Secretaría de Salud<br/>psicóloga del PIC · ESE"]
+        EDU["Secretaría de Educación<br/>y colegios"]
+        JUV["Consejo Municipal<br/>de Juventud"]
+    end
+
+    subgraph EXT["Llegan y se van"]
+        BRI["Brigadas<br/>Cruz Roja · MSF · ICBF"]
+        UNI["Universidades<br/>practicantes · UTCH"]
+    end
+
+    subgraph COM["Comunidad"]
+        FAM["Familias"]
+        CUL["Sabedores, cantadoras,<br/>parteras, lideresas"]
+        ANI["Centro de bienestar animal<br/>y veterinarios"]
+    end
+
+    subgraph RUTA["Ruta de remisión"]
+        L106["Línea 106"]
+        L141["Línea 141 · ICBF"]
+    end
+
+    R -- escucha y acompaña --> J
+    J -. confía en un par .-> R
+    CMGRD -- activa --> R
+    SAL -- forma y supervisa --> R
+    R -- remite y da datos --> SAL
+    EDU -- aporta estudiantes y horas --> R
+    JUV -- legitima --> R
+    BRI -- entrega casos al irse --> R
+    UNI -- supervisión local --> R
+    R -- conecta --> ANI
+    R -- trabaja con --> CUL
+    R -- orienta --> FAM
+    SAL --> L106
+    SAL --> L141
+
+    classDef core fill:#e8590c,stroke:#a33e06,color:#fff
+    classDef youth fill:#fde7d7,stroke:#e8590c,color:#222
+    class R core
+    class J youth
